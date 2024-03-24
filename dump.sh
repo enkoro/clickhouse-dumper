@@ -36,16 +36,16 @@ while read -r db; do
     while read -r table; do
 
         if [ "$db" == "system" ]; then
-            echo "skip system db"
+            echo "Skip system db"
             continue 2
         fi
 
         if [[ $table == ".inner."* ]]; then
-            echo "skip materialized view $table ($db)"
+            echo "Skip materialized view $table ($db)"
             continue
         fi
 
-        echo "export table $table from database $db"
+        echo "Export table $table from database $db"
 
         # dump schema
         clickhouse client --host "$CH_HOST" --port "$CH_PORT" --user "$CH_USER" --password "$CH_PASSWORD" --query "SHOW CREATE TABLE ${db}.${table}" >"${CH_DUMP_OUTDIR}/${db}_${table}_schema.sql"
